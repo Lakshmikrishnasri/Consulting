@@ -44,6 +44,7 @@
   --surface-color: #ffffff;
 }
 
+
 .dark-background {
   --background-color: black;
   --default-color: black;
@@ -1227,11 +1228,13 @@ section,
   position: relative;
   overflow: hidden;
   margin-bottom: 30px;
+  
 }
 
 .services .service-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #b5d3ce
 }
 
 .services .service-card:hover .icon-box {
