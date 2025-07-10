@@ -1252,7 +1252,10 @@ section,
   margin-bottom: 20px;
   transition: all 0.3s ease;
 }
-
+.services .service-cardn  {
+  border-radius: 1.5vw;
+   
+}
 .services .service-card h3 {
   font-size: 1.4rem;
   font-weight: 700;
@@ -1757,6 +1760,7 @@ section,
   transition: 0.3s;
   background-color: var(--surface-color);
   height: 100%;
+  
 }
 
 .team .team-card:hover {
@@ -1780,6 +1784,8 @@ section,
 
 .team .team-image img {
   transition: transform 0.6s ease;
+  height:150px;
+  width:400px
 }
 
 .team .team-image .team-overlay {
@@ -1824,6 +1830,7 @@ section,
 .team .team-content {
   padding: 20px;
   text-align: center;
+  height: 220%;
 }
 
 .team .team-content h3 {
