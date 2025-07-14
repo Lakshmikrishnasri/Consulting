@@ -2847,4 +2847,75 @@ body {
 
 
 
+/* Add these styles to your CSS file (e.g., style.css) */
+
+.header-search {
+  margin-left: 20px; /* Adjust spacing from navigation */
+  position: relative; /* For icon positioning if desired */
+  display: flex; /* To align input and button */
+  align-items: center;
+}
+
+.header-search form {
+  display: flex;
+  border: 1px solid #ddd; /* Example border */
+  border-radius: 5px; /* Slightly rounded corners */
+  overflow: hidden; /* Ensures border-radius applies nicely */
+}
+
+.header-search input[type="text"] {
+  border: none;
+  padding: 8px 10px;
+  outline: none; /* Remove outline on focus */
+  flex-grow: 1; /* Allow input to take available space */
+}
+
+.header-search button[type="submit"] {
+  background-color: var(--accent-color); /* Example button color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-search button[type="submit"] i {
+  font-size: 16px; /* Adjust icon size if using Bootstrap Icons */
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) { /* Adjust breakpoint for mobile nav */
+  .header-search {
+    order: 3; /* Move search below nav on smaller screens if needed */
+    margin-left: 0;
+    margin-top: 10px; /* Add some spacing */
+    width: 100%; /* Full width on smaller screens */
+  }
+  .header-search form {
+    width: 100%;
+  }
+  #search-navigation {
+      margin-top: 10px;
+    }
+    
+}
+
+.highlighted-search {
+  background-color: yellow;
+  font-weight: bold;
+  outline: none;
+}
+
+/* .highlighted-search:focus {
+  outline: 2px solid orange;
+} */
+
+#clear-search {
+  background: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 

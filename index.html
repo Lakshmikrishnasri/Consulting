@@ -39,31 +39,41 @@
 
 <body class="index-page">
   <div class="dots-overlay"></div>
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <h1 class="sitename">We infinitty plus.</h1>
-      </a>
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <h1 class="sitename">We infinitty plus.</h1>
+    </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#why-choose-us">Why Choose Us</a></li>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why-choose-us">Why Choose Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
 
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+<div class="header-search">
+  <form id="search-form">
+    <input type="text" id="search-input" placeholder="Search..." aria-label="Search the website" autocomplete="off">
+    
+    <!-- Clear button initially hidden -->
+    <button type="button" id="clear-search" aria-label="Clear Search" style="display: none;">×</button>
+    
+    <button type="submit" aria-label="Perform Search">
+      <i class="bi bi-search" aria-hidden="true"></i>
+    </button>
+  </form>
+</div>
 
-      <a class="btn-getstarted" href="#consultation">Get Started</a>
 
-    </div>
-  </header>
+
+
+</header>
 
   <main class="main">
 
@@ -1128,3 +1138,153 @@
     video.play();
   });
 </script>
+<script>
+  (function () {
+    document.getElementById("clear-search").addEventListener("click", () => {
+  document.getElementById("search-input").value = "";
+  document.querySelectorAll(".highlighted-search").forEach(span => {
+    const parent = span.parentNode;
+    parent.replaceChild(document.createTextNode(span.textContent), span);
+    parent.normalize();
+  });
+});
+
+    const form = document.getElementById("search-form");
+    const input = document.getElementById("search-input");
+    let highlightedMatches = [];
+    let currentIndex = -1;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const query = input.value.toLowerCase().trim();
+      const contentArea = document.querySelector("main");
+      const allTextNodes = [];
+
+      highlightedMatches = [];
+      currentIndex = -1;
+
+      if (!query) return clearHighlights();
+
+      // Step 1: Find all text nodes inside <main>
+      function findTextNodes(node) {
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+          allTextNodes.push(node);
+        } else {
+          node.childNodes.forEach(findTextNodes);
+        }
+      }
+
+      findTextNodes(contentArea);
+
+      // Step 2: Clear any previous highlights
+      clearHighlights();
+
+      let matchFound = false;
+
+      // Step 3: Highlight all matches
+      allTextNodes.forEach(node => {
+        const text = node.nodeValue;
+        const lowerText = text.toLowerCase();
+        const queryLength = query.length;
+
+        if (lowerText.includes(query)) {
+          matchFound = true;
+          const parent = node.parentNode;
+          const regex = new RegExp(`(${query})`, "gi");
+          const fragments = text.split(regex);
+
+          fragments.forEach(fragment => {
+            if (fragment.toLowerCase() === query) {
+              const match = document.createElement("span");
+              match.className = "highlighted-search";
+              match.tabIndex = 0; // Allow Tab key to focus
+              match.textContent = fragment;
+              highlightedMatches.push(match);
+              parent.insertBefore(match, node);
+            } else {
+              parent.insertBefore(document.createTextNode(fragment), node);
+            }
+          });
+
+          parent.removeChild(node);
+        }
+      });
+
+      if (!matchFound) {
+        alert("No match found!");
+      } else {
+        focusMatch(0);
+      }
+    });
+
+    // Helper: Clear previous highlights
+    function clearHighlights() {
+      document.querySelectorAll(".highlighted-search").forEach(span => {
+        const parent = span.parentNode;
+        parent.replaceChild(document.createTextNode(span.textContent), span);
+        parent.normalize();
+      });
+      highlightedMatches = [];
+      currentIndex = -1;
+    }
+
+    // Helper: Focus and scroll to a match
+    function focusMatch(index) {
+      if (highlightedMatches.length === 0) return;
+      currentIndex = index % highlightedMatches.length;
+      const el = highlightedMatches[currentIndex];
+      el.focus();
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    // Tab key navigation through matches
+    document.addEventListener("keydown", function (e) {
+      // Allow natural tabbing inside input field
+      if (document.activeElement === input) return;
+
+      // Tab key
+      if (e.key === "Tab" && highlightedMatches.length > 0) {
+        e.preventDefault();
+        focusMatch(currentIndex + 1);
+      }
+
+      // Shift + Tab to go backward
+      if (e.key === "Tab" && e.shiftKey && highlightedMatches.length > 0) {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + highlightedMatches.length) % highlightedMatches.length;
+        focusMatch(currentIndex);
+      }
+
+      // ESC to clear
+      if (e.key === "Escape") {
+        clearHighlights();
+        input.value = "";
+      }
+    });
+  })();
+</script>
+<script>
+  const searchInput = document.getElementById("search-input");
+  const clearButton = document.getElementById("clear-search");
+
+  // Show/hide clear button based on input value
+  searchInput.addEventListener("input", function () {
+    clearButton.style.display = this.value.trim() ? "inline" : "none";
+  });
+
+  // Clear input field and highlights
+  clearButton.addEventListener("click", function () {
+    searchInput.value = "";
+    clearButton.style.display = "none";
+
+    // Remove highlights if any
+    document.querySelectorAll(".highlighted-search").forEach(span => {
+      const parent = span.parentNode;
+      parent.replaceChild(document.createTextNode(span.textContent), span);
+      parent.normalize();
+    });
+  });
+</script>
+
+
