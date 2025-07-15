@@ -2919,3 +2919,43 @@ body {
   cursor: pointer;
 }
 
+
+.scroll-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-list {
+  display: flex;
+  /* gap: -10px; */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-752.437px); /* Replace with total width to scroll */
+  }
+}
+
+.scroll-list li {
+  flex-shrink: 0;
+  width: 15px;
+  height: 10px;
+  /* gap: 3px; */
+}
+.small-img {
+  width: 60px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+}
+
+
+  
