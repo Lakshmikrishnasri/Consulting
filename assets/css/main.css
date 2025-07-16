@@ -497,7 +497,7 @@ h6 {
 .footer .icon {
   color: var(--accent-color);
   margin-right: 15px;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 0;
 }
 
@@ -718,6 +718,15 @@ section,
 
 .section-title div .description-title {
   color: var(--accent-color);
+}
+
+#technologies {
+  padding-top: 15px;
+  position: relative;
+  background-color: var(--background-color);
+  overflow: hidden;
+  padding-bottom:0px;
+  
 }
 
 /*--------------------------------------------------------------
@@ -1833,7 +1842,8 @@ section,
 .team .team-content {
   padding: 20px;
   text-align: center;
-  height: 220%;
+  height: 320%;
+  
 }
 
 .team .team-content h3 {
@@ -1847,6 +1857,7 @@ section,
   font-size: 14px;
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin-bottom: 15px;
+  
 }
 
 .team .team-content p {
@@ -2951,8 +2962,8 @@ body {
   /* gap: 3px; */
 }
 .small-img {
-  width: 60px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   display: block;
 }
